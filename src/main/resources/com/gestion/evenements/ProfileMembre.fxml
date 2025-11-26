@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.controller.MyProfileController"
+            style="-fx-background-color:#f8fafc;">
+
+    <!-- HEADER PROFESSIONNEL INDIGO -->
+    <top>
+        <VBox style="-fx-background:linear-gradient(to right, #312e81, #4c1d95); -fx-padding:65 100;">
+            <HBox alignment="CENTER_LEFT" spacing="50">
+
+                <!-- Avatar pro ultra-sobre -->
+                <StackPane>
+                    <Circle radius="92" fill="#1e1b4b"/>
+                    <Circle radius="86" fill="#3730a3"/>
+                    <Label text="MD"
+                           style="-fx-font-size:68px; -fx-font-weight:900; -fx-text-fill:white;
+                                  -fx-font-family:'Segoe UI', Arial, sans-serif;"/>
+                </StackPane>
+
+                <VBox spacing="14">
+                    <Label fx:id="fullNameLabel" text="Marie Dupont"
+                           style="-fx-font-size:48px; -fx-font-weight:800; -fx-text-fill:white;"/>
+
+                    <Label fx:id="memberIdLabel" text="Membre n° M1702918345678"
+                           style="-fx-font-size:19px; -fx-text-fill:#e0e7ff;"/>
+
+                    <HBox spacing="18">
+                        <Label fx:id="statusBadge" text="ACTIF"
+                               style="-fx-background-color:#059669; -fx-text-fill:white; -fx-font-weight:bold;
+                                      -fx-padding:10 35; -fx-background-radius:30; -fx-font-size:16;"/>
+                        <Label fx:id="cotisationBadge" text="Cotisation à jour"
+                               style="-fx-background-color:#4338ca; -fx-text-fill:white; -fx-font-weight:bold;
+                                      -fx-padding:10 35; -fx-background-radius:30; -fx-font-size:16;"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CONTENU PRO & ÉPURÉ -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <VBox spacing="60" alignment="TOP_CENTER" style="-fx-padding:80 120;">
+
+                <!-- Carte principale – style entreprise premium -->
+                <VBox maxWidth="1000" spacing="50"
+                      style="-fx-background-color:white; -fx-background-radius:20;
+                             -fx-padding:70; -fx-border-radius:20;
+                             -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.12), 50, 0.15, 0, 20);">
+
+                    <Label text="Informations du membre"
+                           style="-fx-font-size:34px; -fx-font-weight:800; -fx-text-fill:#1e293b;"/>
+
+                    <GridPane hgap="100" vgap="32" style="-fx-font-size:18px;">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <Label text="Nom complet"           style="-fx-text-fill:#475569; -fx-font-weight:600;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="nomLabel" text="Marie Dupont" style="-fx-text-fill:#1e293b; -fx-font-weight:500;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Adresse e-mail"        style="-fx-text-fill:#475569; -fx-font-weight:600;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="emailLabel" text="marie.dupont@email.com" style="-fx-text-fill:#1e293b;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Téléphone"             style="-fx-text-fill:#475569; -fx-font-weight:600;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="phoneLabel" text="06 12 34 56 78" style="-fx-text-fill:#1e293b;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Date d'inscription"    style="-fx-text-fill:#475569; -fx-font-weight:600;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="inscriptionLabel" text="15 mars 2023" style="-fx-text-fill:#1e293b;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Cotisation payée le"   style="-fx-text-fill:#475569; -fx-font-weight:600;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="cotisationDateLabel" text="10 janvier 2025"
+                               style="-fx-text-fill:#059669; -fx-font-weight:bold; -fx-font-size:19px;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <HBox spacing="25" alignment="CENTER_RIGHT">
+                        <Button text="Modifier le profil" onAction="#editProfile"
+                                style="-fx-background-color:#f8fafc; -fx-text-fill:#312e81; -fx-font-weight:700;
+                                       -fx-border-color:#cbd5e1; -fx-border-width:2; -fx-border-radius:14;
+                                       -fx-background-radius:14; -fx-padding:16 50; -fx-font-size:16;"/>
+                        <Button text="Changer le mot de passe" onAction="#changePassword"
+                                style="-fx-background-color:#3730a3; -fx-text-fill:white; -fx-font-weight:700;
+                                       -fx-background-radius:14; -fx-padding:16 50; -fx-font-size:16;"/>
+                    </HBox>
+                </VBox>
+
+                <Label text="EventSphere © 2025 – Système de gestion d’association sécurisé"
+                       style="-fx-text-fill:#64748b; -fx-font-size:15px;" alignment="CENTER"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

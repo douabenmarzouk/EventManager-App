@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.gestion.evenements.ui.AssociationDashboardController">
+
+    <!-- BARRE HAUT -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="10"
+              style="-fx-background-color: #111827; -fx-padding: 12;">
+            <Label fx:id="labelNomAssociation"
+                   text="Nom de l'association"
+                   style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label fx:id="labelStatutAssociation"
+                   text="ACTIVE"
+                   style="-fx-background-color: #10B981; -fx-text-fill: white; -fx-padding: 4 8 4 8; -fx-background-radius: 12; -fx-font-size: 12;"/>
+        </HBox>
+    </top>
+
+    <!-- MENU GAUCHE -->
+    <left>
+        <VBox spacing="12"
+              prefWidth="230"
+              style="-fx-background-color: #020617; -fx-padding: 18;">
+            <Label text="Menu association"
+                   style="-fx-text-fill: #9CA3AF; -fx-font-size: 13; -fx-font-weight: bold;"/>
+
+            <Button text="Tableau de bord"
+                    fx:id="btnDashboard"
+                    onAction="#showDashboard"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-alignment: CENTER_LEFT; -fx-padding: 8 12 8 12;"/>
+            <Button text="Membres"
+                    fx:id="btnMembres"
+                    onAction="#showMembres"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-alignment: CENTER_LEFT; -fx-padding: 8 12 8 12;"/>
+            <Button text="Cotisations"
+                    fx:id="btnCotisations"
+                    onAction="#showCotisations"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-alignment: CENTER_LEFT; -fx-padding: 8 12 8 12;"/>
+            <Button text="Feedbacks"
+                    fx:id="btnFeedbacks"
+                    onAction="#showFeedbacks"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-alignment: CENTER_LEFT; -fx-padding: 8 12 8 12;"/>
+
+            <Pane VBox.vgrow="ALWAYS"/>
+
+            <Button text="Retour au menu"
+                    fx:id="btnRetour"
+                    onAction="#retourMenuPrincipal"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #4B5563; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        </VBox>
+    </left>
+
+    <!-- CONTENU CENTRAL -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background: #020617; -fx-background-color: #020617;">
+            <content>
+                <VBox spacing="18"
+                      style="-fx-background-color: #0F172A; -fx-padding: 20;">
+
+                    <!-- LIGNE 1 : INDICATEURS -->
+                    <HBox spacing="16">
+                        <VBox spacing="6"
+                              prefWidth="220"
+                              style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                            <Label text="Nombre de membres"
+                                   style="-fx-text-fill: #9CA3AF; -fx-font-size: 13;"/>
+                            <Label fx:id="labelNbMembres"
+                                   text="0"
+                                   style="-fx-text-fill: white; -fx-font-size: 26; -fx-font-weight: bold;"/>
+                            <Label text="Tous les membres de l'association"
+                                   style="-fx-text-fill: #6B7280; -fx-font-size: 11;"/>
+                        </VBox>
+
+                        <VBox spacing="6"
+                              prefWidth="220"
+                              style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                            <Label text="Cotisations encaissées (€)"
+                                   style="-fx-text-fill: #9CA3AF; -fx-font-size: 13;"/>
+                            <Label fx:id="labelCotisationsEncaisses"
+                                   text="0.00"
+                                   style="-fx-text-fill: #FACC15; -fx-font-size: 26; -fx-font-weight: bold;"/>
+                            <Label text="Somme des cotisations payées"
+                                   style="-fx-text-fill: #6B7280; -fx-font-size: 11;"/>
+                        </VBox>
+
+                        <VBox spacing="6"
+                              prefWidth="220"
+                              style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                            <Label text="Solde actuel (€)"
+                                   style="-fx-text-fill: #9CA3AF; -fx-font-size: 13;"/>
+                            <Label fx:id="labelSolde"
+                                   text="0.00"
+                                   style="-fx-text-fill: #22C55E; -fx-font-size: 26; -fx-font-weight: bold;"/>
+                            <Label text="Solde de l'association"
+                                   style="-fx-text-fill: #6B7280; -fx-font-size: 11;"/>
+                        </VBox>
+
+                        <VBox spacing="6"
+                              prefWidth="240"
+                              style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                            <Label text="Budget initial (€)"
+                                   style="-fx-text-fill: #9CA3AF; -fx-font-size: 13;"/>
+                            <Label fx:id="labelBudget"
+                                   text="0.00"
+                                   style="-fx-text-fill: #60A5FA; -fx-font-size: 26; -fx-font-weight: bold;"/>
+                            <Label text="Valeur définie lors de la création"
+                                   style="-fx-text-fill: #6B7280; -fx-font-size: 11;"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- LIGNE 2 : TABLE DES MEMBRES -->
+                    <VBox spacing="10"
+                          style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                        <Label text="Liste des membres"
+                               style="-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;"/>
+
+                        <TableView fx:id="tableMembres"
+                                   prefHeight="260">
+                            <columns>
+                                <TableColumn fx:id="colIdMembre"
+                                             text="ID"
+                                             prefWidth="60"/>
+                                <TableColumn fx:id="colNomMembre"
+                                             text="Nom"
+                                             prefWidth="130"/>
+                                <TableColumn fx:id="colPrenomMembre"
+                                             text="Prénom"
+                                             prefWidth="130"/>
+                                <TableColumn fx:id="colEmailMembre"
+                                             text="Email"
+                                             prefWidth="180"/>
+                                <TableColumn fx:id="colStatutMembre"
+                                             text="Statut"
+                                             prefWidth="100"/>
+                                <TableColumn fx:id="colCotisationMembre"
+                                             text="Cotisation (€)"
+                                             prefWidth="110"/>
+                            </columns>
+                        </TableView>
+
+                        <HBox spacing="8"
+                              alignment="CENTER_RIGHT">
+                            <Button text="Ajouter membre"
+                                    fx:id="btnAjouterMembre"
+                                    onAction="#ajouterMembre"
+                                    style="-fx-background-color: #2563EB; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                            <Button text="Supprimer"
+                                    fx:id="btnSupprimerMembre"
+                                    onAction="#supprimerMembre"
+                                    style="-fx-background-color: #DC2626; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                            <Button text="Recevoir cotisation"
+                                    fx:id="btnRecevoirCotisation"
+                                    onAction="#recevoirCotisation"
+                                    style="-fx-background-color: #22C55E; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- LIGNE 3 : FEEDBACKS -->
+                    <VBox spacing="10"
+                          style="-fx-background-color: #111827; -fx-padding: 16; -fx-background-radius: 10;">
+                        <Label text="Feedbacks des membres"
+                               style="-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;"/>
+
+                        <ListView fx:id="listFeedbacks"
+                                  prefHeight="200"/>
+
+                        <HBox spacing="8"
+                              alignment="CENTER_RIGHT">
+                            <Button text="Voir tous les feedbacks"
+                                    fx:id="btnVoirFeedbacks"
+                                    onAction="#voirTousFeedbacks"
+                                    style="-fx-background-color: #4B5563; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                        </HBox>
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

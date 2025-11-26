@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.gestion.evenements.controller.MemberDashboardController">
+
+    <!-- EN-TÊTE SANS CERCLE -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="10"
+              style="-fx-background-color: #111827; -fx-padding: 12 18;">
+            <VBox spacing="3">
+                <Label fx:id="welcomeLabel"
+                       text="Bonjour, Jean Dupont"
+                       style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                <Label fx:id="memberNumberLabel"
+                       text="Numéro de membre : M123456789"
+                       style="-fx-text-fill: #9CA3AF; -fx-font-size: 11;"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel"
+                   text="ACTIF • Cotisation à jour"
+                   style="-fx-background-color: #10B981; -fx-text-fill: white;
+                          -fx-padding: 4 8; -fx-background-radius: 999; -fx-font-size: 11;"/>
+            <Button text="Déconnexion"
+                    fx:id="btnLogout"
+                    onAction="#logout"
+                    style="-fx-background-color: #DC2626; -fx-text-fill: white;
+                           -fx-background-radius: 999; -fx-padding: 4 12; -fx-font-size: 11;"/>
+        </HBox>
+    </top>
+
+    <!-- garde ici ton <center> ScrollPane ... -->
+
+
+    <!-- CONTENU CENTRAL -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background: #020617; -fx-background-color: #020617;">
+            <content>
+                <VBox spacing="30"
+                      alignment="TOP_CENTER"
+                      style="-fx-background-color: #0F172A; -fx-padding: 30 40;">
+
+                    <!-- BIENVENUE + AVATAR -->
+                    <HBox spacing="25" alignment="CENTER_LEFT">
+                        <Circle radius="40"
+                                fill="#667eea"
+                                style="-fx-stroke: white; -fx-stroke-width: 3;"/>
+                        <VBox spacing="6">
+                            <Label text="Espace membre"
+                                   style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                            <Label fx:id="memberNumberLabel"
+                                   text="Numéro de membre : M123456789"
+                                   style="-fx-font-size: 13; -fx-text-fill: #9CA3AF;"/>
+                            <Label fx:id="cotisationStatusLabel"
+                                   text="Cotisation à jour jusqu'au 15/12/2025"
+                                   style="-fx-font-size: 13; -fx-text-fill: #22C55E; -fx-font-weight: bold;"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- CARTES D'ACTION -->
+                    <GridPane hgap="20" vgap="20">
+                        <!-- Carte 1 : Mes événements -->
+                        <VBox alignment="CENTER"
+                              spacing="10"
+                              style="-fx-background-color: #111827; -fx-background-radius: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 18, 0.3, 0, 8);
+                                     -fx-padding: 22; -fx-cursor: hand;"
+                              GridPane.columnIndex="0" GridPane.rowIndex="0"
+                              onMouseClicked="#showMyEvents">
+                            <Label text="Mes événements"
+                                   style="-fx-font-size: 20; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            <Label text="Voir mes inscriptions aux événements"
+                                   wrapText="true"
+                                   style="-fx-font-size: 13; -fx-text-fill: #9CA3AF;"/>
+                            <Label fx:id="nbInscriptionsLabel"
+                                   text="3 événements à venir"
+                                   style="-fx-text-fill: #60A5FA; -fx-font-weight: bold;"/>
+                        </VBox>
+
+                        <!-- Carte 2 : Payer cotisation -->
+                        <VBox alignment="CENTER"
+                              spacing="10"
+                              style="-fx-background-color: #111827; -fx-background-radius: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 18, 0.3, 0, 8);
+                                     -fx-padding: 22; -fx-cursor: hand;"
+                              GridPane.columnIndex="1" GridPane.rowIndex="0"
+                              onMouseClicked="#showPayCotisation">
+                            <Label text="Ma cotisation"
+                                   style="-fx-font-size: 20; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            <Label text="50 € / an"
+                                   style="-fx-font-size: 22; -fx-text-fill: #F97316; -fx-font-weight: bold;"/>
+                            <Button text="Payer / Renouveler"
+                                    style="-fx-background-color: #2563EB; -fx-text-fill: white;
+                                           -fx-background-radius: 20; -fx-padding: 6 18; -fx-font-size: 13;"
+                                    onAction="#payCotisationNow"/>
+                        </VBox>
+
+                        <!-- Carte 3 : Mon profil -->
+                        <VBox alignment="CENTER"
+                              spacing="10"
+                              style="-fx-background-color: #111827; -fx-background-radius: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 18, 0.3, 0, 8);
+                                     -fx-padding: 22; -fx-cursor: hand;"
+                              GridPane.columnIndex="0" GridPane.rowIndex="1"
+                              onMouseClicked="#showMyProfile">
+                            <Label text="Mon profil"
+                                   style="-fx-font-size: 20; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            <Label text="Gérer mes informations (email, téléphone...)"
+                                   wrapText="true"
+                                   style="-fx-font-size: 13; -fx-text-fill: #9CA3AF;"/>
+                            <Button text="Modifier mon profil"
+                                    style="-fx-background-color: #4B5563; -fx-text-fill: white;
+                                           -fx-background-radius: 20; -fx-padding: 6 18; -fx-font-size: 13;"
+                                    onAction="#editProfile"/>
+                        </VBox>
+
+                        <!-- Carte 4 : Historique -->
+                        <VBox alignment="CENTER"
+                              spacing="10"
+                              style="-fx-background-color: #111827; -fx-background-radius: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 18, 0.3, 0, 8);
+                                     -fx-padding: 22; -fx-cursor: hand;"
+                              GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              onMouseClicked="#showHistorique">
+                            <Label text="Historique"
+                                   style="-fx-font-size: 20; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            <Label text="Voir toutes mes inscriptions passées"
+                                   wrapText="true"
+                                   style="-fx-font-size: 13; -fx-text-fill: #9CA3AF;"/>
+                            <Button text="Ouvrir l'historique"
+                                    style="-fx-background-color: #0EA5E9; -fx-text-fill: white;
+                                           -fx-background-radius: 20; -fx-padding: 6 18; -fx-font-size: 13;"
+                                    onAction="#openHistoryDialog"/>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- BANNIÈRE PROCHAIN ÉVÉNEMENT -->
+                    <VBox alignment="CENTER"
+                          spacing="8"
+                          style="-fx-background-color: #667EEA; -fx-background-radius: 18;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 22, 0.4, 0, 10);
+                                 -fx-padding: 22;">
+                        <Label fx:id="nextEventTitleLabel"
+                               text="Prochain événement : Soirée Gala 2025"
+                               style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Label fx:id="nextEventInfoLabel"
+                               text="15 Décembre 2025 • Paris • Places restantes : 24 / 100"
+                               style="-fx-text-fill: #E0E7FF; -fx-font-size: 13;"/>
+                        <Button text="S'inscrire maintenant"
+                                style="-fx-background-color: white; -fx-text-fill: #667EEA;
+                                       -fx-font-weight: bold; -fx-background-radius: 30;
+                                       -fx-padding: 10 28; -fx-font-size: 14;"
+                                onAction="#inscrireProchainEvenement"/>
+                    </VBox>
+
+                    <!-- PIED DE PAGE -->
+                    <Label text="© 2025 Plateforme de gestion des événements • Espace membre"
+                           style="-fx-text-fill: #6B7280; -fx-font-size: 12;"/>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
