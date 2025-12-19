@@ -1,29 +1,44 @@
 package com.gestion.evenements.model.membres.record;
 
-import com.gestion.evenements.model.membres.entities.Association;
-import com.gestion.evenements.model.membres.exceptions.MembreException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-/**
- * Record Feedback
- * Immuable et validé avant création
- */
-public record Feedback(Association association, String message, LocalDate date) {
+public record Feedback(
 
-    /**
-     * Méthode de création validée
-     * Permet de lever MembreException avant de créer le record
-     */
-    public static Feedback creerFeedback(Association association, String message, LocalDate date) throws MembreException {
-        if (association == null) {
-            throw new MembreException("Association non valide", "ASSOCIATION_NULL");
+        int idMembre,
+        int note,
+        String commentaire,
+        LocalDate date          // ← AJOUTÉ
+) {
+    // Constructeur compact avec validation
+    public Feedback {
+        if (note < 1 || note > 5) {
+            throw new IllegalArgumentException("La note doit être entre 1 et 5");
         }
-        if (message == null || message.isBlank()) {
-            throw new MembreException("Message vide", "MESSAGE_VIDE");
+        if (commentaire == null || commentaire.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le commentaire ne peut pas être vide");
         }
-        if (date == null) {
-            throw new MembreException("Date manquante", "DATE_MANQUANTE");
-        }
-        return new Feedback(association, message, date);
+    }
+
+    // Constructeur pratique : date = aujourd'hui
+    public Feedback(int idMembre, int note, String commentaire) {
+        this(idMembre, note, commentaire, LocalDate.now());
+    }
+
+    public String getEtoiles() {
+        return "⭐".repeat(note);
+    }
+
+    public String getDateFormatee() {
+        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public void afficher() {
+        System.out.println("\n=== Feedback ===");
+        System.out.println("Feedback  ID : " + idMembre);
+        System.out.println("Membre ID : " + idMembre);
+        System.out.println("Note : " + getEtoiles() + " (" + note + "/5)");
+        System.out.println("Commentaire : " + commentaire);
+        System.out.println("Date : " + getDateFormatee());
     }
 }

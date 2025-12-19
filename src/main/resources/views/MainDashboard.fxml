@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.controller.MainDashboardController"
+            style="-fx-background-color: #f9fafb;">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox prefWidth="250" spacing="5" style="-fx-background-color: #1e293b;">
+
+            <!-- Header Sidebar -->
+            <VBox spacing="10" alignment="CENTER" style="-fx-background-color: #0f172a;">
+                <Label text="🎉" style="-fx-font-size: 40px;"/>
+                <Label text="Gestion Événements" style="-fx-text-fill: white; -fx-font-weight: bold;">
+                    <font><Font name="System Bold" size="16"/></font>
+                </Label>
+
+                <!-- User Profile -->
+                <VBox spacing="5" alignment="CENTER" style="-fx-background-color: rgba(255, 255, 255, 0.1); -fx-background-radius: 8; -fx-padding: 15;">
+                    <Label fx:id="userNameLabel" text="John Doe" style="-fx-text-fill: white; -fx-font-weight: bold;">
+                        <font><Font name="System Bold" size="14"/></font>
+                    </Label>
+                    <Label fx:id="userRoleLabel" text="👤 Membre" style="-fx-text-fill: #94a3b8;"/>
+                </VBox>
+
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+            </VBox>
+
+            <Separator style="-fx-background-color: rgba(255,255,255,0.1);"/>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="5" VBox.vgrow="ALWAYS">
+                <Label text="MENU" style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-font-weight: bold;">
+                    <padding><Insets top="15" left="20" bottom="5"/></padding>
+                </Label>
+
+                <Button fx:id="dashboardBtn" text="📊 Tableau de bord"
+                        onAction="#onNavigateToDashboard"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand; -fx-font-weight: bold;"/>
+
+
+                <!-- SECTION ADMIN -->
+                <VBox fx:id="adminSection" visible="false" managed="false">
+                    <Label text="ADMINISTRATION" style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-font-weight: bold;">
+                        <padding><Insets top="15" left="20" bottom="5"/></padding>
+                    </Label>
+                    <Button text="👥 Membres" onAction="#onNavigateToMembres"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: transparent; -fx-text-fill: #cbd5e1; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;"/>
+                    <Button text="🔐 Administrateurs" onAction="#onNavigateToAdmins"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: transparent; -fx-text-fill: #cbd5e1; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;"/>
+                    <Button text="📊 Rapports" onAction="#onNavigateToRapports"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: transparent; -fx-text-fill: #cbd5e1; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;"/>
+                </VBox>
+
+                <!-- SECTION ASSOCIATION -->
+                <VBox fx:id="associationSection" visible="false" managed="false">
+
+                    <Button text="🏛️ Mon Association" onAction="#onNavigateToAssociation"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: transparent; -fx-text-fill: #cbd5e1; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <Separator style="-fx-background-color: rgba(255,255,255,0.1);"/>
+                <Button text="🚪 Déconnexion" onAction="#onLogout"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-alignment: CENTER_LEFT; -fx-padding: 12 20; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;"/>
+
+                <padding><Insets bottom="20"/></padding>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <BorderPane>
+            <!-- TOP BAR -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+                    <Label fx:id="pageTitle" text="Tableau de bord" style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                        <font><Font name="System Bold" size="24"/></font>
+                    </Label>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <TextField fx:id="globalSearchField" promptText="🔍 Rechercher..."
+                               prefWidth="300"
+                               style="-fx-background-color: #f3f4f6; -fx-border-color: transparent; -fx-background-radius: 20; -fx-padding: 8 15;"/>
+
+                    <Button fx:id="notifBtn" text="🔔" onAction="#onShowNotifications"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-background-radius: 50; -fx-padding: 8; -fx-cursor: hand; -fx-font-size: 18px;"/>
+
+                    <padding><Insets top="15" right="30" bottom="15" left="30"/></padding>
+                </HBox>
+            </top>
+
+            <!-- CONTENT AREA -->
+            <center>
+                <StackPane fx:id="contentArea" style="-fx-background-color: #f9fafb;">
+                    <VBox spacing="30" alignment="CENTER">
+
+                        <!-- Welcome -->
+                        <VBox spacing="10" alignment="CENTER">
+                            <Label text="👋 Bienvenue !" style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                                <font><Font name="System Bold" size="32"/></font>
+
+
+                            </Label>
+                            <Label fx:id="welcomeMessage" text="Que souhaitez-vous faire aujourd'hui ?"
+                                   style="-fx-text-fill: #6b7280;">
+                                <font><Font size="16"/></font>
+                            </Label>
+                        </VBox>
+
+                        <!-- Stats Cards -->
+                        <HBox spacing="20" alignment="CENTER">
+                            <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 6, 0, 0, 2); -fx-padding: 25 40;">
+                                <Label text="📅" style="-fx-font-size: 36px;"/>
+                                <Label fx:id="statEvenementsLabel" text="12" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                                    <font><Font name="System Bold" size="28"/></font>
+                                </Label>
+                                <Label text="Événements" style="-fx-text-fill: #6b7280; -fx-font-size: 14px;"/>
+                            </VBox>
+
+                            <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 6, 0, 0, 2); -fx-padding: 25 40;">
+                                <Label text="✅" style="-fx-font-size: 36px;"/>
+                                <Label fx:id="statInscriptionsLabel" text="5" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                                    <font><Font name="System Bold" size="28"/></font>
+                                </Label>
+                                <Label text="Inscriptions" style="-fx-text-fill: #6b7280; -fx-font-size: 14px;"/>
+                            </VBox>
+
+                            <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 6, 0, 0, 2); -fx-padding: 25 40;">
+                                <Label text="👥" style="-fx-font-size: 36px;"/>
+                                <Label fx:id="statMembresLabel" text="48" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                                    <font><Font name="System Bold" size="28"/></font>
+                                </Label>
+                                <Label text="Membres" style="-fx-text-fill: #6b7280; -fx-font-size: 14px;"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Quick Actions -->
+                        <VBox spacing="15" alignment="CENTER">
+                            <Label text="Actions rapides" style="-fx-text-fill: #374151; -fx-font-weight: bold;">
+                                <font><Font name="System Bold" size="18"/></font>
+                            </Label>
+
+                            <HBox spacing="15" alignment="CENTER">
+                                <Label fx:id="labelBienvenue"
+                                       style="-fx-font-size: 22px; -fx-font-weight: bold;"
+                                       text="Bienvenue !" />
+                                <Button text="➕ Créer Événement" onAction="#onCreateEvent"
+                                        prefWidth="180" prefHeight="50"
+                                        style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+
+                                <Button fx:id="quickActionBtn" text="👥 Gérer Membres"
+                                        onAction="#onQuickAction"
+                                        prefWidth="180" prefHeight="50"
+                                        style="-fx-background-color: #6b7280; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+                            </HBox>
+                        </VBox>
+
+                        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+                    </VBox>
+                </StackPane>
+            </center>
+        </BorderPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.gestion.evenements.controller.InscriptionController"
+           alignment="CENTER"
+           style="-fx-background: linear-gradient(to bottom right, #667eea, #764ba2);">
+
+    <VBox maxWidth="500" maxHeight="800" spacing="25" alignment="CENTER"
+          style="-fx-background-color: white;
+                 -fx-background-radius: 22;
+                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.22), 25, 0, 0, 10);
+                 -fx-padding: 38 40;">
+
+        <!-- Titre -->
+        <Label text="Créer un compte" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1e293b;"/>
+        <Label text="Rejoignez-nous vite !" style="-fx-text-fill: #64748b; -fx-font-size: 14px;"/>
+
+        <!-- Choix du rôle -->
+        <VBox spacing="16" alignment="CENTER">
+            <Label text="Je suis :" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #374151;"/>
+            <HBox spacing="16" alignment="CENTER">
+                <ToggleButton fx:id="roleMembreBtn" text="Membre" onAction="#onRoleSelected"
+                              prefWidth="100" prefHeight="80"
+                              style="-fx-background-radius: 16; -fx-border-radius: 16; -fx-background-color: #f0f9ff; -fx-border-color: #0ea5e9; -fx-border-width: 3; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <ToggleButton fx:id="roleAdminBtn" text="Admin" onAction="#onRoleSelected"
+                              prefWidth="100" prefHeight="80"
+                              style="-fx-background-radius: 16; -fx-border-radius: 16; -fx-background-color: #fffbeb; -fx-border-color: #f59e0b; -fx-border-width: 3; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <ToggleButton fx:id="roleAssociationBtn" text="Association" onAction="#onRoleSelected"
+                              prefWidth="100" prefHeight="80"
+                              style="-fx-background-radius: 16; -fx-border-radius: 16; -fx-background-color: #f0fdf4; -fx-border-color: #22c55e; -fx-border-width: 3; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+
+        <Separator style="-fx-background-color: #e2e8f0;"/>
+
+        <!-- Formulaire de base -->
+        <VBox spacing="14">
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <TextField fx:id="nomField" promptText="Nom" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                           style="-fx-background-radius: 10; -fx-padding: 12;"/>
+                <TextField fx:id="prenomField" promptText="Prénom" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 10; -fx-padding: 12;"/>
+                <TextField fx:id="emailField" promptText="Email" GridPane.rowIndex="1" GridPane.columnSpan="2"
+                           style="-fx-background-radius: 10; -fx-padding: 12;"/>
+                <TextField fx:id="telephoneField" promptText="Téléphone" GridPane.rowIndex="2" GridPane.columnSpan="2"
+                           style="-fx-background-radius: 10; -fx-padding: 12;"/>
+                <PasswordField fx:id="passwordField" promptText="Mot de passe" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                               style="-fx-background-radius: 10; -fx-padding: 12;"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirmer" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                               style="-fx-background-radius: 10; -fx-padding: 12;"/>
+            </GridPane>
+
+            <!-- Force mot de passe -->
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <ProgressBar fx:id="passwordStrengthBar" prefWidth="150" progress="0"/>
+                <Label fx:id="passwordStrengthLabel" text=""/>
+            </HBox>
+
+            <!-- Sections spécifiques -->
+            <VBox fx:id="membreSection" visible="true" managed="true"/>
+
+            <VBox fx:id="adminSection" visible="false" managed="false" spacing="10">
+                <ComboBox fx:id="niveauAccesCombo" promptText="Niveau admin"/>
+            </VBox>
+
+            <VBox fx:id="associationSection" visible="false" managed="false" spacing="10">
+                <TextField fx:id="nomAssociationField" promptText="Nom association"/>
+                <TextField fx:id="localisationField" promptText="Ville / Adresse"/>
+                <TextArea fx:id="descriptionArea" promptText="Description de l'association" prefRowCount="3"/>
+                <TextField fx:id="budgetField" promptText="Budget initial (€)"/>
+            </VBox>
+
+            <!-- Conditions -->
+            <CheckBox fx:id="acceptConditionsCheck" text="J'accepte les conditions *"/>
+            <CheckBox fx:id="newsletterCheck" text="Newsletter"/>
+
+            <!-- Messages -->
+            <Label fx:id="errorLabel" textFill="#dc2626" visible="false" wrapText="true" style="-fx-font-weight: bold;"/>
+            <Label fx:id="successLabel" textFill="#16a34a" visible="false" wrapText="true" style="-fx-font-weight: bold;"/>
+
+            <!-- Bouton inscription -->
+            <Button fx:id="inscrireBtn" text="S'INSCRIRE"
+                    onAction="#onInscrire"
+                    prefHeight="48" maxWidth="Infinity"
+                    style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 14;"/>
+
+            <!-- Redirection login -->
+            <HBox alignment="CENTER" spacing="6">
+                <Label text="Déjà inscrit ?"/>
+                <Button fx:id="goToLoginBtn" text="Se connecter" onAction="#goToLogin"
+                        style="-fx-text-fill: #3b82f6; -fx-background-color: transparent; -fx-font-weight: bold;"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</StackPane>

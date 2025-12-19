@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.gestion.evenements.controller.AjouterMembreController"
+      spacing="20" alignment="CENTER" style="-fx-padding: 30; -fx-background-color: #f9fafb;">
+
+    <Label text="Ajouter / Modifier un Membre"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+
+    <GridPane hgap="15" vgap="15" maxWidth="450">
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Nom :" GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-weight: 600; -fx-text-fill: #4b5563;"/>
+        <TextField fx:id="nomField" promptText="Nom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Prénom :" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-font-weight: 600; -fx-text-fill: #4b5563;"/>
+        <TextField fx:id="prenomField" promptText="Prénom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Email :" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-weight: 600; -fx-text-fill: #4b5563;"/>
+        <TextField fx:id="emailField" promptText="email@exemple.com" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Téléphone :" GridPane.rowIndex="3" GridPane.columnIndex="0"
+               style="-fx-font-weight: 600; -fx-text-fill: #4b5563;"/>
+        <TextField fx:id="telephoneField" promptText="06..." GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Cotisation payée ?" GridPane.rowIndex="4" GridPane.columnIndex="0"
+               style="-fx-font-weight: 600; -fx-text-fill: #4b5563;"/>
+        <CheckBox fx:id="cotisationCheckBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#onAnnuler"
+                style="-fx-background-color: #6b7280; -fx-text-fill: white; -fx-padding: 10 25; -fx-background-radius: 8;"/>
+        <Button text="Enregistrer" onAction="#onEnregistrer"
+                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 30; -fx-background-radius: 8; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>

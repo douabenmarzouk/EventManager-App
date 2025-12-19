@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.controller.AssociationController"
+            style="-fx-background-color: #f9fafb;">
+
+    <!-- HEADER -->
+    <top>
+        <VBox style="-fx-background-color: white;
+                     -fx-border-color: #e5e7eb;
+                     -fx-border-width: 0 0 2 0;">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label text="🏛️ Gestion Association" style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                    <font>
+                        <Font name="System Bold" size="24"/>
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+
+            </HBox>
+
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+        </VBox>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background-color: transparent;">
+            <VBox spacing="20" fx:id="rootVBox">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+
+                <!-- FORMULAIRE ASSOCIATION -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 8;
+                             -fx-border-color: #e5e7eb;
+                             -fx-border-radius: 8;
+                             -fx-border-width: 1;
+                             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 4, 0, 0, 2);
+                             -fx-padding: 20;">
+
+                    <Label text="📋 Informations Générales"
+                           style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                        <font>
+                            <Font name="System Bold" size="18"/>
+                        </font>
+                    </Label>
+
+                    <GridPane hgap="20" vgap="15">
+
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="150"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="150"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <!-- Nom -->
+                        <Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <TextField fx:id="nomField" promptText="Nom de l'association"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <!-- Email -->
+                        <Label text="Email :" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <TextField fx:id="emailField" promptText="contact@association.com"
+                                   GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <!-- Localisation -->
+                        <Label text="Localisation :" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <TextField fx:id="localisationField" promptText="Adresse"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <!-- Date de création -->
+                        <Label text="Date Création :" GridPane.columnIndex="2" GridPane.rowIndex="1"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <DatePicker fx:id="dateCreationPicker"
+                                    GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <!-- Budget -->
+                        <Label text="Budget :" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <TextField fx:id="budgetField" promptText="0.00"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <!-- Statut -->
+                        <Label text="Statut :" GridPane.columnIndex="2" GridPane.rowIndex="2"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <CheckBox fx:id="activeCheckBox" text="Association Active"
+                                  GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+                        <!-- Description -->
+                        <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="3"
+                               style="-fx-text-fill: #6b7280; -fx-font-weight: 600;"/>
+                        <TextArea fx:id="descriptionArea" promptText="Description..."
+                                  GridPane.columnIndex="1" GridPane.rowIndex="3"
+                                  GridPane.columnSpan="3" prefRowCount="3" wrapText="true"/>
+
+                    </GridPane>
+
+                    <HBox spacing="15" alignment="CENTER_RIGHT">
+                        <Button text="💾 Enregistrer"
+                                onAction="#onEnregistrer"
+                                style="-fx-background-color: #2563eb;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 6;
+                                       -fx-padding: 8 16;"/>
+
+                        <Button text="🔄 Actualiser"
+                                onAction="#onActualiser"
+                                style="-fx-background-color: #6b7280;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 6;
+                                       -fx-padding: 8 16;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- STATISTIQUES -->
+                <HBox spacing="20">
+
+                    <!-- Solde -->
+                    <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white;
+                                 -fx-background-radius: 8;
+                                 -fx-border-color: #e5e7eb;
+                                 -fx-border-radius: 8;
+                                 -fx-border-width: 1;
+                                 -fx-padding: 20;">
+                        <Label text="💰 Solde Actuel"
+                               style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                        <Label fx:id="soldeLabel" text="0.00 €" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                            <font><Font size="28"/></font>
+                        </Label>
+                    </VBox>
+
+                    <!-- Membres -->
+                    <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white;
+                                 -fx-background-radius: 8;
+                                 -fx-border-color: #e5e7eb;
+                                 -fx-border-radius: 8;
+                                 -fx-border-width: 1;
+                                 -fx-padding: 20;">
+                        <Label text="👥 Membres Actifs"
+                               style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                        <Label fx:id="membresLabel" text="0" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                            <font><Font size="28"/></font>
+                        </Label>
+                    </VBox>
+
+                    <!-- Cotisations -->
+                    <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white;
+                                 -fx-background-radius: 8;
+                                 -fx-border-color: #e5e7eb;
+                                 -fx-border-radius: 8;
+                                 -fx-border-width: 1;
+                                 -fx-padding: 20;">
+                        <Label text="✅ Cotisations Payées"
+                               style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                        <Label fx:id="cotisationsLabel" text="0" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                            <font><Font size="28"/></font>
+                        </Label>
+                    </VBox>
+
+                    <!-- Feedbacks -->
+                    <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white;
+                                 -fx-background-radius: 8;
+                                 -fx-border-color: #e5e7eb;
+                                 -fx-border-radius: 8;
+                                 -fx-border-width: 1;
+                                 -fx-padding: 20;">
+                        <Label text="💬 Feedbacks"
+                               style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                        <Label fx:id="feedbacksLabel" text="0" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;">
+                            <font><Font size="28"/></font>
+                        </Label>
+                    </VBox>
+
+                </HBox>
+
+                <!-- MEMBRES -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 8;
+                             -fx-border-color: #e5e7eb;
+                             -fx-border-radius: 8;
+                             -fx-border-width: 1;
+                             -fx-padding: 20;">
+
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label text="👥 Liste des Membres"
+                               style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                            <font><Font size="18"/></font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <TextField fx:id="searchMembreField"
+                                   promptText="🔍 Rechercher..."
+                                   prefWidth="250"
+                                   style="-fx-background-color: #f3f4f6; -fx-background-radius: 20;"/>
+
+                        <Button text="➕ Ajouter Membre"
+                                onAction="#onAjouterMembre"
+                                style="-fx-background-color: #2563eb;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 6;
+                                       -fx-padding: 8 16;"/>
+                    </HBox>
+
+                    <TableView fx:id="membresTable" VBox.vgrow="ALWAYS" prefHeight="300">
+                        <columns>
+                            <TableColumn fx:id="membreIdCol" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="membreNumeroCol" text="N° Membre" prefWidth="120"/>
+                            <TableColumn fx:id="membreNomCol" text="Nom" prefWidth="150"/>
+                            <TableColumn fx:id="membrePrenomCol" text="Prénom" prefWidth="150"/>
+                            <TableColumn fx:id="membreEmailCol" text="Email" prefWidth="200"/>
+                            <TableColumn fx:id="membreStatutCol" text="Statut" prefWidth="120"/>
+                            <TableColumn fx:id="membreCotisationCol" text="Cotisation" prefWidth="100"/>
+                            <TableColumn fx:id="membreActionsCol" text="Actions" prefWidth="150"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="✏️ Modifier"
+                                onAction="#onModifierMembre"
+                                style="-fx-background-color: #6b7280;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 6;
+                                       -fx-padding: 8 16;"/>
+                        <Button text="🗑️ Supprimer"
+                                onAction="#onSupprimerMembre"
+                                style="-fx-background-color: #ef4444;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 6;
+                                       -fx-padding: 8 16;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- FEEDBACKS -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 8;
+                             -fx-border-color: #e5e7eb;
+                             -fx-border-radius: 8;
+                             -fx-border-width: 1;
+                             -fx-padding: 20;">
+
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label text="💬 Feedbacks Récents"
+                               style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                            <font><Font size="18"/></font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS"/>
+                    </HBox>
+
+                    <TableView fx:id="feedbacksTable" prefHeight="200">
+                        <columns>
+                            <TableColumn fx:id="feedbackMembreCol" text="Membre" prefWidth="200"/>
+                            <TableColumn fx:id="feedbackNoteCol" text="Note" prefWidth="80"/>
+                            <TableColumn fx:id="feedbackCommentaireCol" text="Commentaire" prefWidth="400"/>
+                            <TableColumn fx:id="feedbackDateCol" text="Date" prefWidth="150"/>
+                        </columns>
+                    </TableView>
+
+                </VBox>
+                <Button fx:id="deconnexionBtn" text="Déconnexion" style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#onLogout"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

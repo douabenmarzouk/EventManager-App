@@ -3,6 +3,7 @@ package com.gestion.evenements.model.membres.entities;
 
 import com.gestion.evenements.model.membres.enums.StatutMembre;
 import com.gestion.evenements.model.membres.exceptions.MembreException;
+import com.gestion.evenements.model.membres.record.Feedback;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,9 @@ public final class Membre extends Personne {
     private String numeroMembre;
     private LocalDate datePaiementCotisation;
     private List<String> historiqueInscriptions;
+    private final List<Feedback> feedbackList = new ArrayList<>();
 
-    // ---------- CONSTRUCTEURS ----------
+
     public Membre() {
         super();
         this.statut = StatutMembre.INACTIF;
@@ -24,7 +26,7 @@ public final class Membre extends Personne {
         this.numeroMembre = genererNumeroMembre();
         this.historiqueInscriptions = new ArrayList<>();
     }
-
+    public List<Feedback> getFeedbacks() { return new ArrayList<>(feedbackList); }
     public Membre(int id, String nom, String prenom, String email, String telephone) {
         super(id, nom, prenom, email, telephone);
         this.statut = StatutMembre.INACTIF;
@@ -44,6 +46,10 @@ public final class Membre extends Personne {
         this.historiqueInscriptions = new ArrayList<>();
     }
 
+
+    public List<Feedback> consulterFeedbacks() {
+        return new ArrayList<>(feedbackList);
+    }
     // ---------- MÉTHODES PRINCIPALES ----------
 
     @Override
@@ -188,6 +194,14 @@ public final class Membre extends Personne {
     public List<String> getHistoriqueInscriptions() {
         return new ArrayList<>(historiqueInscriptions);
     }
+
+
+    public void ajouterFeedback(Feedback feedback) throws MembreException {
+        if (feedback == null) throw new MembreException("Feedback null", "FEEDBACK_NULL");
+        feedbackList.add(feedback);
+    }
+
+
 
     @Override
     public String toString() {

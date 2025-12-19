@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.view.evenements.RapportController">
+    <top>
+
+        <VBox style="-fx-background-color: #e74c3c; -fx-padding:
+20;">
+
+            <Label text="📊 RAPPORTS ET STATISTIQUES"
+
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill:
+white;"/>
+
+            <Label text="Consultez les statistiques de vos
+événements" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30;">
+            <!-- Filtres -->
+            <HBox spacing="15" alignment="CENTER_LEFT"
+                  style="-fx-background-color: #ecf0f1; -fx-padding: 15;
+-fx-background-radius: 5;">
+
+                <Label text="🔍 Filtres:" style="-fx-font-weight:
+
+bold; -fx-font-size: 14px;"/>
+                <VBox spacing="3">
+                    <Label text="Période" style="-fx-font-size:
+
+11px; -fx-text-fill: #7f8c8d;"/>
+
+                    <ComboBox fx:id="comboPeriode"
+                              promptText="Sélectionner" prefWidth="150"/>
+
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Date début" style="-fx-font-size:
+
+11px; -fx-text-fill: #7f8c8d;"/>
+
+                    <DatePicker fx:id="dateDebut"
+
+                                promptText="Du..." prefWidth="130"/>
+
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Date fin" style="-fx-font-size:
+
+11px; -fx-text-fill: #7f8c8d;"/>
+
+                    <DatePicker fx:id="dateFin" promptText="Au..."
+
+                                prefWidth="130"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Statut" style="-fx-font-size:
+
+11px; -fx-text-fill: #7f8c8d;"/>
+
+                    <ComboBox fx:id="comboStatut" promptText="Tous"
+
+                              prefWidth="120"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="🔄 Appliquer"
+
+                        onAction="#appliquerFiltres"
+
+                        style="-fx-background-color: #3498db;
+-fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"/>
+
+                <Button text="❌ Réinitialiser"
+
+                        onAction="#reinitialiserFiltres"
+
+                        style="-fx-background-color: #95a5a6;
+-fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"/>
+
+            </HBox>
+            <!-- Cartes de statistiques -->
+            <HBox spacing="20" alignment="CENTER">
+                <VBox alignment="CENTER" spacing="5"
+                      style="-fx-background-color: #3498db; -fx-padding: 20;
+-fx-background-radius: 10;" prefWidth="200">
+
+                    <Label text="📅" style="-fx-font-size: 30px;"/>
+                    <Label text="Total Événements"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblTotalEvenements" text="0"
+                           style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight:
+bold;"/>
+
+                </VBox>
+                <VBox alignment="CENTER" spacing="5"
+                      style="-fx-background-color: #2ecc71; -fx-padding: 20;
+-fx-background-radius: 10;" prefWidth="200">
+
+                    <Label text="✍️" style="-fx-font-size: 30px;"/>
+                    <Label text="Total Inscriptions"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                    <Label fx:id="lblTotalInscriptions" text="0"
+                           style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight:
+bold;"/>
+
+                </VBox>
+                <VBox alignment="CENTER" spacing="5"
+                      style="-fx-background-color: #f39c12; -fx-padding: 20;
+-fx-background-radius: 10;" prefWidth="200">
+
+                    <Label text="👥" style="-fx-font-size: 30px;"/>
+                    <Label text="Capacité Totale"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblCapaciteTotale" text="0"
+                           style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight:
+bold;"/>
+
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5"
+                      style="-fx-background-color: #9b59b6; -fx-padding: 20;
+-fx-background-radius: 10;" prefWidth="200">
+
+                    <Label text="📊" style="-fx-font-size: 30px;"/>
+                    <Label text="Taux de Remplissage"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                    <Label fx:id="lblTauxRemplissage" text="0%"
+                           style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight:
+bold;"/>
+
+                </VBox>
+            </HBox>
+            <!-- Graphique de progression -->
+            <HBox spacing="20" alignment="CENTER">
+                <VBox spacing="5" style="-fx-background-color:
+white; -fx-padding: 15; -fx-background-radius: 5; -fx-effect:
+dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      HBox.hgrow="ALWAYS">
+
+                    <Label text="📈 Progression par Statut"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <VBox spacing="5" alignment="CENTER_LEFT">
+                            <HBox spacing="10"
+
+                                  alignment="CENTER_LEFT">
+
+                                <Label text="●"
+
+                                       style="-fx-text-fill: #2ecc71; -fx-font-size: 20px;"/>
+                                <Label text="Confirmés:"
+
+                                       style="-fx-font-weight: bold;"/>
+
+                                <Label fx:id="lblConfirmes"
+
+                                       text="0"/>
+
+                            </HBox>
+                            <ProgressBar fx:id="progressConfirmes"
+                                         progress="0" prefWidth="200" style="-fx-accent: #2ecc71;"/>
+
+                        </VBox>
+                        <VBox spacing="5" alignment="CENTER_LEFT">
+                            <HBox spacing="10"
+
+                                  alignment="CENTER_LEFT">
+
+                                <Label text="●"
+
+                                       style="-fx-text-fill: #f39c12; -fx-font-size: 20px;"/>
+                                <Label text="En attente:"
+
+                                       style="-fx-font-weight: bold;"/>
+
+                                <Label fx:id="lblEnAttente"
+
+                                       text="0"/>
+
+                            </HBox>
+                            <ProgressBar fx:id="progressEnAttente"
+                                         progress="0" prefWidth="200" style="-fx-accent: #f39c12;"/>
+
+                        </VBox>
+
+                        <VBox spacing="5" alignment="CENTER_LEFT">
+                            <HBox spacing="10"
+
+                                  alignment="CENTER_LEFT">
+
+                                <Label text="●"
+
+                                       style="-fx-text-fill: #e74c3c; -fx-font-size: 20px;"/>
+                                <Label text="Annulés:"
+
+                                       style="-fx-font-weight: bold;"/>
+
+                                <Label fx:id="lblAnnules"
+
+                                       text="0"/>
+
+                            </HBox>
+                            <ProgressBar fx:id="progressAnnules"
+                                         progress="0" prefWidth="200" style="-fx-accent: #e74c3c;"/>
+
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </HBox>
+            <!-- Tableau détaillé -->
+            <VBox spacing="10" VBox.vgrow="ALWAYS">
+                <Label text="📋 DÉTAILS PAR ÉVÉNEMENT"
+
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill:
+#2c3e50;"/>
+
+                <TableView fx:id="tableRapports"
+
+                           VBox.vgrow="ALWAYS">
+
+                    <columns>
+                        <TableColumn fx:id="colEvenement"
+
+                                     text="Événement" prefWidth="250"/>
+
+                        <TableColumn fx:id="colDate" text="Date"
+
+                                     prefWidth="120"/>
+
+                        <TableColumn fx:id="colInscrits"
+
+                                     text="Inscrits" prefWidth="100"/>
+
+                        <TableColumn fx:id="colCapacite"
+
+                                     text="Capacité" prefWidth="100"/>
+
+                        <TableColumn fx:id="colDisponible"
+
+                                     text="Disponible" prefWidth="100"/>
+
+                        <TableColumn fx:id="colTaux" text="Taux %"
+
+                                     prefWidth="100"/>
+
+                        <TableColumn fx:id="colStatut"
+
+                                     text="Statut" prefWidth="120"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Aucune donnée disponible pour
+la période sélectionnée" style="-fx-text-fill: #7f8c8d;"/>
+
+                    </placeholder>
+                </TableView>
+            </VBox>
+        </VBox>
+
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10"
+              style="-fx-padding: 10; -fx-background-color: #ecf0f1;">
+
+            <Label fx:id="lblStatus" text="Prêt"
+
+                   style="-fx-text-fill: #7f8c8d;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="📄 Exporter PDF" onAction="#exporterPDF"
+
+                    style="-fx-background-color: #9b59b6;
+
+-fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button text="📊 Exporter Excel"
+
+                    onAction="#exporterExcel"
+
+                    style="-fx-background-color: #27ae60;
+
+-fx-text-fill: white; -fx-font-weight: bold;"/>
+
+            <Button text="🔄 Actualiser" onAction="#actualiser"
+
+                    style="-fx-font-weight: bold;"/>
+
+            <Button fx:id="btnFermer" text="❌ Fermer"
+                    onAction="#fermer" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

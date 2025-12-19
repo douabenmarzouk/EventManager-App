@@ -1,0 +1,283 @@
+package com.gestion.evenements.database;
+
+import java.sql.*;
+
+/**
+ * Classe utilitaire pour consulter et afficher les données de la base
+ */
+public class DatabaseViewer {
+
+    private final Connection connection;
+
+    public DatabaseViewer() {
+        this.connection = DatabaseManager.getInstance().getConnection();
+    }
+
+    /**
+     * Afficher tous les membres inscrits
+     */
+    public void afficherTousMembres() {
+        System.out.println("\n╔═══════════════════════════════════════════════════════════╗");
+        System.out.println("║                    LISTE DES MEMBRES                      ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════╝\n");
+
+        String query = """
+            SELECT p.id, p.nom, p.prenom, p.email, p.telephone,
+                   m.numero_membre, m.statut, m.cotisation_payee, m.montant_cotisation
+            FROM personnes p
+            INNER JOIN membres m ON p.id = m.personne_id
+            ORDER BY p.nom, p.prenom
+        """;
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            int count = 0;
+            while (rs.next()) {
+                count++;
+                System.out.println("┌─────────────────────────────────────────────────────────┐");
+                System.out.printf("│ ID: %-3d │ Numéro: %-35s │%n",
+                    rs.getInt("id"),
+                    rs.getString("numero_membre"));
+                System.out.printf("│ Nom: %-50s │%n",
+                    rs.getString("prenom") + " " + rs.getString("nom"));
+                System.out.printf("│ Email: %-48s │%n",
+                    rs.getString("email"));
+                System.out.printf("│ Tél: %-50s │%n",
+                    rs.getString("telephone"));
+                System.out.printf("│ Statut: %-15s │ Cotisation: %-20s │%n",
+                    rs.getString("statut"),
+                    rs.getBoolean("cotisation_payee") ? "✅ PAYÉE (" + rs.getDouble("montant_cotisation") + "€)" : "❌ NON PAYÉE");
+                System.out.println("└─────────────────────────────────────────────────────────┘");
+            }
+
+            System.out.println("\n📊 Total: " + count + " membre(s)\n");
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération des membres");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Afficher tous les administrateurs
+     */
+    public void afficherTousAdmins() {
+        System.out.println("\n╔═══════════════════════════════════════════════════════════╗");
+        System.out.println("║                 LISTE DES ADMINISTRATEURS                 ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════╝\n");
+
+        String query = """
+            SELECT p.id, p.nom, p.prenom, p.email, p.telephone,
+                   a.niveau_acces, a.date_nomination
+            FROM personnes p
+            INNER JOIN administrateurs a ON p.id = a.personne_id
+            ORDER BY a.niveau_acces, p.nom
+        """;
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            int count = 0;
+            while (rs.next()) {
+                count++;
+                System.out.println("┌─────────────────────────────────────────────────────────┐");
+                System.out.printf("│ ID: %-3d │ Niveau: %-38s │%n",
+                    rs.getInt("id"),
+                    rs.getString("niveau_acces"));
+                System.out.printf("│ Nom: %-50s │%n",
+                    rs.getString("prenom") + " " + rs.getString("nom"));
+                System.out.printf("│ Email: %-48s │%n",
+                    rs.getString("email"));
+                System.out.printf("│ Nomination: %-44s │%n",
+                    rs.getDate("date_nomination"));
+                System.out.println("└─────────────────────────────────────────────────────────┘");
+            }
+
+            System.out.println("\n📊 Total: " + count + " administrateur(s)\n");
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération des administrateurs");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Afficher toutes les associations
+     */
+    public void afficherToutesAssociations() {
+        System.out.println("\n╔═══════════════════════════════════════════════════════════╗");
+        System.out.println("║                 LISTE DES ASSOCIATIONS                    ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════╝\n");
+
+        String query = "SELECT * FROM associations ORDER BY nom";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            int count = 0;
+            while (rs.next()) {
+                count++;
+                System.out.println("┌─────────────────────────────────────────────────────────┐");
+                System.out.printf("│ ID: %-3d │ %-48s │%n",
+                    rs.getInt("id"),
+                    rs.getString("nom"));
+                System.out.printf("│ Localisation: %-44s │%n",
+                    rs.getString("localisation"));
+                System.out.printf("│ Email: %-48s │%n",
+                    rs.getString("email"));
+                System.out.printf("│ Budget: %10.2f€ │ Solde: %10.2f€              │%n",
+                    rs.getDouble("budget"),
+                    rs.getDouble("solde"));
+                System.out.printf("│ Active: %-48s │%n",
+                    rs.getBoolean("active") ? "✅ OUI" : "❌ NON");
+                System.out.println("└─────────────────────────────────────────────────────────┘");
+            }
+
+            System.out.println("\n📊 Total: " + count + " association(s)\n");
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération des associations");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Afficher les statistiques globales
+     */
+    public void afficherStatistiques() {
+        System.out.println("\n╔═══════════════════════════════════════════════════════════╗");
+        System.out.println("║              STATISTIQUES DE LA BASE DE DONNÉES          ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════╝\n");
+
+        try (Statement stmt = connection.createStatement()) {
+
+            // Nombre de membres
+            ResultSet rs1 = stmt.executeQuery("SELECT COUNT(*) as count FROM membres");
+            int nbMembres = rs1.getInt("count");
+
+            // Nombre de membres actifs
+            ResultSet rs2 = stmt.executeQuery(
+                "SELECT COUNT(*) as count FROM membres WHERE cotisation_payee = 1"
+            );
+            int nbMembresActifs = rs2.getInt("count");
+
+            // Nombre d'administrateurs
+            ResultSet rs3 = stmt.executeQuery("SELECT COUNT(*) as count FROM administrateurs");
+            int nbAdmins = rs3.getInt("count");
+
+            // Nombre d'associations
+            ResultSet rs4 = stmt.executeQuery("SELECT COUNT(*) as count FROM associations");
+            int nbAssociations = rs4.getInt("count");
+
+            // Total cotisations
+            ResultSet rs5 = stmt.executeQuery(
+                "SELECT SUM(montant_cotisation) as total FROM membres WHERE cotisation_payee = 1"
+            );
+            double totalCotisations = rs5.getDouble("total");
+
+            // Nombre de feedbacks
+            ResultSet rs6 = stmt.executeQuery("SELECT COUNT(*) as count FROM feedbacks");
+            int nbFeedbacks = rs6.getInt("count");
+
+            System.out.println("📊 Membres :");
+            System.out.println("   - Total : " + nbMembres);
+            System.out.println("   - Actifs (cotisation payée) : " + nbMembresActifs);
+            System.out.println("   - Inactifs : " + (nbMembres - nbMembresActifs));
+            System.out.println();
+
+            System.out.println("👥 Administrateurs : " + nbAdmins);
+            System.out.println();
+
+            System.out.println("🏢 Associations : " + nbAssociations);
+            System.out.println();
+
+            System.out.println("💰 Finances :");
+            System.out.printf("   - Total cotisations récoltées : %.2f€%n", totalCotisations);
+            System.out.println();
+
+            System.out.println("💬 Feedbacks : " + nbFeedbacks);
+            System.out.println();
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors du calcul des statistiques");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Rechercher un utilisateur par email
+     */
+    public void rechercherParEmail(String email) {
+        System.out.println("\n🔍 Recherche de : " + email + "\n");
+
+        String query = """
+            SELECT p.*,
+                   m.numero_membre, m.statut, m.cotisation_payee,
+                   a.niveau_acces
+            FROM personnes p
+            LEFT JOIN membres m ON p.id = m.personne_id
+            LEFT JOIN administrateurs a ON p.id = a.personne_id
+            WHERE p.email = ?
+        """;
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("✅ Utilisateur trouvé :");
+                System.out.println("┌─────────────────────────────────────────────────────────┐");
+                System.out.printf("│ ID: %-52d │%n", rs.getInt("id"));
+                System.out.printf("│ Nom: %-50s │%n",
+                    rs.getString("prenom") + " " + rs.getString("nom"));
+                System.out.printf("│ Email: %-48s │%n", rs.getString("email"));
+                System.out.printf("│ Téléphone: %-45s │%n", rs.getString("telephone"));
+                System.out.printf("│ Rôle: %-49s │%n", rs.getString("role"));
+
+                if ("MEMBRE".equals(rs.getString("role"))) {
+                    System.out.printf("│ Numéro membre: %-41s │%n", rs.getString("numero_membre"));
+                    System.out.printf("│ Statut: %-47s │%n", rs.getString("statut"));
+                    System.out.printf("│ Cotisation: %-44s │%n",
+                        rs.getBoolean("cotisation_payee") ? "✅ PAYÉE" : "❌ NON PAYÉE");
+                } else if ("ADMIN".equals(rs.getString("role"))) {
+                    System.out.printf("│ Niveau d'accès: %-40s │%n", rs.getString("niveau_acces"));
+                }
+
+                System.out.println("└─────────────────────────────────────────────────────────┘");
+            } else {
+                System.out.println("❌ Aucun utilisateur trouvé avec cet email");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la recherche");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Menu principal pour tester
+     */
+    public static void main(String[] args) {
+        DatabaseViewer viewer = new DatabaseViewer();
+
+        System.out.println("\n═══════════════════════════════════════════════════════════");
+        System.out.println("          VISUALISEUR DE BASE DE DONNÉES");
+        System.out.println("═══════════════════════════════════════════════════════════\n");
+
+        // Afficher les statistiques
+        viewer.afficherStatistiques();
+
+        // Afficher tous les membres
+        viewer.afficherTousMembres();
+
+        // Afficher tous les administrateurs
+        viewer.afficherTousAdmins();
+
+        // Afficher toutes les associations
+        viewer.afficherToutesAssociations();
+
+        // Exemple de recherche
+        viewer.rechercherParEmail("admin@gestion.com");
+    }
+}

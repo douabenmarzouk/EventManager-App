@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.view.evenements.EvenementController">
+    <top>
+        <VBox style="-fx-background-color: #3498db; -fx-padding:
+20;">
+
+            <Label text="📅 GESTION DES ÉVÉNEMENTS"
+
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill:
+white;"/>
+
+            <Label text="Créer, modifier et gérer vos événements"
+
+                   style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.4">
+            <!-- Formulaire à gauche -->
+            <VBox spacing="15" style="-fx-padding: 20;
+
+-fx-background-color: #ecf0f1;">
+
+                <Label text="📝 FORMULAIRE ÉVÉNEMENT"
+
+                       style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill:
+#2c3e50;"/>
+
+                <VBox spacing="5">
+                    <Label text="Nom de l'événement *"
+
+                           style="-fx-font-weight: bold;"/>
+
+                    <TextField fx:id="txtNom" promptText="Ex:
+
+Conférence Annuelle 2024"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date *" style="-fx-font-weight:
+
+bold;"/>
+
+                    <DatePicker fx:id="datePickerDate"
+
+                                promptText="Sélectionner une date"/>
+
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Lieu *" style="-fx-font-weight:
+
+bold;"/>
+
+                    <TextField fx:id="txtLieu" promptText="Ex:
+
+Salle de conférence A"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Capacité (nombre de places) *"
+
+                           style="-fx-font-weight: bold;"/>
+
+                    <TextField fx:id="txtCapacite" promptText="Ex:
+
+150"/>
+
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Description"
+
+                           style="-fx-font-weight: bold;"/>
+
+                    <TextArea fx:id="txtDescription"
+                              promptText="Décrivez l'événement..." prefRowCount="4"
+                              wrapText="true"/>
+                </VBox>
+                <HBox spacing="10" alignment="CENTER">
+                    <Button fx:id="btnAjouter" text="➕ Ajouter"
+
+                            onAction="#ajouterEvenement"
+
+                            style="-fx-background-color: #2ecc71;
+-fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10
+20;"/>
+
+                    <Button fx:id="btnModifier" text="✏️ Modifier"
+
+                            onAction="#modifierEvenement"
+
+                            style="-fx-background-color: #f39c12;
+-fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10
+20;"/>
+
+                    <Button fx:id="btnAnnuler" text="🔄
+Réinitialiser" onAction="#reinitialiserFormulaire"
+
+                            style="-fx-background-color: #95a5a6;
+-fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10
+20;"/>
+
+                </HBox>
+                <Label text="* Champs obligatoires"
+                       style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;
+-fx-font-style: italic;"/>
+
+            </VBox>
+            <!-- Table à droite -->
+            <VBox spacing="10" style="-fx-padding: 20;">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="📋 LISTE DES ÉVÉNEMENTS"
+
+                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill:
+#2c3e50;"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="btnSupprimer" text="️
+
+Supprimer" onAction="#supprimerEvenement"
+
+                            style="-fx-background-color: #e74c3c;
+
+-fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                </HBox>
+                <TableView fx:id="tableEvenements"
+
+                           VBox.vgrow="ALWAYS" onMouseClicked="#selectionnerEvenement">
+
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID"
+
+                                     prefWidth="50"/>
+
+                        <TableColumn fx:id="colNom" text="Nom"
+
+                                     prefWidth="200"/>
+
+                        <TableColumn fx:id="colDate" text="Date"
+
+                                     prefWidth="120"/>
+
+                        <TableColumn fx:id="colLieu" text="Lieu"
+
+                                     prefWidth="150"/>
+
+                        <TableColumn fx:id="colCapacite"
+
+                                     text="Capacité" prefWidth="100"/>
+
+                        <TableColumn fx:id="colDescription"
+
+                                     text="Description" prefWidth="300"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Aucun événement. Utilisez le
+formulaire pour en ajouter." style="-fx-text-fill: #7f8c8d;"/>
+
+                    </placeholder>
+                </TableView>
+            </VBox>
+        </SplitPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10"
+              style="-fx-padding: 10; -fx-background-color: #ecf0f1;">
+
+            <Label fx:id="lblStatus" text="Prêt"
+
+                   style="-fx-text-fill: #7f8c8d;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔄 Actualiser" onAction="#actualiser"
+
+                    style="-fx-font-weight: bold;"/>
+
+            <Button fx:id="btnFermer" text="❌ Fermer"
+                    onAction="#fermer" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

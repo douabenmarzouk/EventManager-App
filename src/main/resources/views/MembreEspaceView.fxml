@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.controller.MembreEspaceController"
+            prefWidth="1000" prefHeight="600"
+            style="-fx-background-color: #f9fafb;">
+
+    <!-- HEADER -->
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 2 0;">
+            <Label text="👤 Espace Membre" style="-fx-text-fill: #111827; -fx-font-weight: bold;">
+                <font><Font name="System Bold" size="24"/></font>
+            </Label>
+            <Label fx:id="welcomeMessageMembre" text="Bienvenue Jean Dupont !" style="-fx-text-fill: #6b7280;">
+                <font><Font size="14"/></font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🚪 Déconnexion" onAction="#onLogout"
+                    style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 12; -fx-font-weight: 600; -fx-cursor: hand;"/>
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+        </HBox>
+    </top>
+
+    <!-- CENTER - Contenu principal -->
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <!-- STATUS CARDS -->
+            <HBox spacing="15">
+                <VBox fx:id="cotisationStatusCard" spacing="5" alignment="CENTER" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #ef4444; -fx-border-width: 2; -fx-effect: dropshadow(three-pass-box, rgba(239,68,68,0.2), 6, 0, 0, 1); -fx-padding: 15;">
+                    <Label text="💳" style="-fx-font-size: 32px;"/>
+                    <Label fx:id="cotisationStatusLabel" text="Non Payée" style="-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label fx:id="cotisationMontantLabel" text="50.00 €" style="-fx-text-fill: #6b7280; -fx-font-size: 12px;"/>
+                    <Label fx:id="cotisationDateLabel" text="" style="-fx-text-fill: #6b7280; -fx-font-size: 11px;"/>
+                </VBox>
+
+                <VBox spacing="5" alignment="CENTER" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 2; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 1); -fx-padding: 15;">
+                    <Label text="👤" style="-fx-font-size: 32px;"/>
+                    <Label fx:id="membreStatutLabel" text="Inactif" style="-fx-text-fill: #6b7280; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label fx:id="membreNumeroLabel" text="N° M123456" style="-fx-text-fill: #6b7280; -fx-font-size: 12px;"/>
+                </VBox>
+
+                <VBox spacing="5" alignment="CENTER" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 2; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 1); -fx-padding: 15;">
+                    <Label text="📅" style="-fx-font-size: 32px;"/>
+
+                </VBox>
+            </HBox>
+
+            <!-- LISTE EVENEMENTS -->
+            <VBox spacing="10">
+                <Label text="Événements à venir" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <ListView fx:id="evenementsListView" prefHeight="100"
+                          style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+            </VBox>
+
+            <!-- GRID ACTIONS PRINCIPALES -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints percentHeight="50"/>
+                    <RowConstraints percentHeight="50"/>
+                </rowConstraints>
+
+                <!-- Payer Cotisation -->
+                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-padding: 12;">
+                    <Label text="💰 Payer Cotisation" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                    <TextField fx:id="montantCotisationField" promptText="Montant (€)" text="50.00"/>
+                    <Button fx:id="payerCotisationBtn" text="💳 Payer" onAction="#onPayerCotisation" maxWidth="Infinity"
+                            style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </VBox>
+
+                <!-- Ajouter Feedback -->
+                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-padding: 12;">
+                    <Label text="💬 Donner un Feedback" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                    <HBox spacing="5"><Label text="Note:"/><Spinner fx:id="noteSpinner" prefWidth="50"/></HBox>
+                    <TextArea fx:id="commentaireFeedbackArea" promptText="Votre commentaire..." prefRowCount="2"/>
+                    <Button text="✅ Envoyer" onAction="#onAjouterFeedback" maxWidth="Infinity"
+                            style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </VBox>
+
+                <!-- Modifier Compte -->
+                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-padding: 12;">
+                    <Label text="⚙️ Modifier Mon Compte" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                    <TextField fx:id="nomMembreField" promptText="Nom"/>
+                    <TextField fx:id="prenomMembreField" promptText="Prénom"/>
+                    <TextField fx:id="emailMembreField" promptText="Email"/>
+                    <TextField fx:id="telephoneMembreField" promptText="Téléphone"/>
+                    <Button text="💾 Enregistrer" onAction="#onModifierCompte" maxWidth="Infinity"
+                            style="-fx-background-color: #8b5cf6; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </VBox>
+
+                <!-- Mes Feedbacks -->
+                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-padding: 12;">
+                    <Label text="💬 Mes Feedbacks" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                    <TableView fx:id="mesFeedbacksTable">
+                        <columns>
+                            <TableColumn fx:id="feedbackDateCol" text="Date" prefWidth="80"/>
+                            <TableColumn fx:id="feedbackNoteCol" text="Note" prefWidth="50"/>
+                            <TableColumn fx:id="feedbackCommentCol" text="Commentaire" prefWidth="200"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

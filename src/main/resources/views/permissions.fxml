@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gestion.evenements.controller.PermissionsController">
+
+    <top>
+        <Label text="Gérer Permissions des Administrateurs"
+               style="-fx-font-size: 16; -fx-font-weight: bold;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <HBox spacing="10">
+                <Label text="Utilisateur:"/>
+                <ComboBox fx:id="userCombo" prefWidth="200"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Rôle:"/>
+                <ComboBox fx:id="roleCombo" prefWidth="150"/>
+            </HBox>
+
+            <Button text="Modifier Permission"
+                    fx:id="updateButton"
+                    onAction="#updatePermission"/>
+
+            <Label text="Journal:"/>
+            <TextArea fx:id="logArea" prefHeight="200" editable="false"/>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+</BorderPane>

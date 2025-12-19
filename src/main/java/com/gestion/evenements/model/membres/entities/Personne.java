@@ -27,10 +27,7 @@ public abstract  sealed class Personne implements INotifiable
         this.dateInscription = LocalDate.now();
     }
     public abstract String getRole();
-    @Override
-    public void envoyerNotification(String message) {
-        System.out.println("📧 Notification à " + getNomComplet() + " : " + message);
-    }
+
 
     @Override
     public void envoyerEmail(String sujet, String corps) {
@@ -44,7 +41,10 @@ public void valider() throws MembreException {
      Validateurs.PERSONNE.valider(this);
 }
 
-
+    @Override
+    public void envoyerNotification(String message) {
+        System.out.println("📧 Notification à " + getNomComplet() + " : " + message);
+    }
 
     public String getNomComplet() {
         return prenom + " " + nom;

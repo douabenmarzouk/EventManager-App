@@ -17,7 +17,7 @@ public final class Administrateur extends Personne {
     // Constructeur par défaut
     public Administrateur() {
         super();
-        this.niveau = NiveauAcces.MODERATEUR;
+        this.niveau = NiveauAcces.SUPER_ADMIN;
         this.dateNomination = LocalDate.now();
     }
 
@@ -112,18 +112,6 @@ public final class Administrateur extends Personne {
         );
     }
 
-    public void validerInscriptionMembre(int idMembre) throws MembreException {
-        Membre membre = trouverMembre(idMembre);
-
-        if (membre.getStatut().getLibelle().equals("ACTIF")) {
-            throw new MembreException(
-                    "Ce membre est déjà actif",
-                    "MEMBRE_DEJA_ACTIF"
-            );
-        }
-
-        System.out.println("✅ Inscription du membre " + membre.getNomComplet() + " validée par l'association");
-    }
 
     public void setNiveau(NiveauAcces niveau) {
         this.niveau = niveau;
